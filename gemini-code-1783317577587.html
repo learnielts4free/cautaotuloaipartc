@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chuyên Đề Từ Loại & Trật Tự Tính Từ - Ms Lê Hằng English</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #8854C0;
+            --accent-color: #FDCB6E;
+            --success-color: #00D26A;
+            --danger-color: #FF4757;
+            --text-color: #2D3436;
+            --card-bg: rgba(255, 255, 255, 0.95);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Quicksand', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 10px;
+            overflow-x: hidden;
+            position: relative;
+            background: linear-gradient(-45deg, #8854C0, #E84393, #00C9A7, #FDCB6E);
+            background-size: 400% 400%;
+            animation: gradientBG 12s ease infinite;
+            color: var(--text-color);
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 0;
+            opacity: 0.12;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cg fill='%23ffffff'%3E%3Cpath d='M9 25c-2 0-3 1-3 3s1 3 3 3 3-1 3-3-1-3-3-3zm36 10c-2 0-3 1-3 3s1 3 3 3 3-1 3-3-1-3-3-3zM15 8l2 5h5l-4 3 2 5-5-3-5 3 2-5-4-3h5z'/%3E%3C/g%3E%3C/svg%3E");
+            animation: patternMove 25s linear infinite;
+        }
+
+        @keyframes patternMove {
+            0% { background-position: 0 0; }
+            100% { background-position: 300px 300px; }
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            z-index: 1;
+            position: relative;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 15px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 20px;
+            border-radius: 15px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+            border: 2px solid #fff;
+        }
+
+        header h5 {
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            font-weight: 900;
+            letter-spacing: 0.5px;
+        }
+
+        .alert-box {
+            background: #FFEAA7;
+            border: 3px dashed #FF9F43;
+            border-radius: 18px;
+            padding: 18px;
+            margin-bottom: 30px;
+            text-align: center;
+            font-weight: 700;
+            box-shadow: 0 6px 0 #FF9F43;
+            line-height: 1.6;
+        }
+
+        .alert-title {
+            color: #D63031;
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+            display: block;
+            font-weight: 900;
+        }
+
+        .quiz-card {
+            background: var(--card-bg);
+            border-radius: 22px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 0px rgba(0,0,0,0.06), 0 16px 20px rgba(0,0,0,0.04);
+            border: 3px solid #FFF;
+            position: relative;
+            transition: transform 0.2s ease;
+        }
+
+        .question-text {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 18px;
+            line-height: 1.6;
+        }
+
+        .options-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        .option-btn {
+            background: #FFF;
+            border: 3px solid #E2E8F0;
+            border-radius: 16px;
+            padding: 14px 20px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            text-align: left;
+            cursor: pointer;
+            outline: none;
+            box-shadow: 0 5px 0 #E2E8F0;
+            transition: all 0.1s ease;
+        }
+
+        .option-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 0 #CBD5E1;
+            background-color: #F8FAFC;
+        }
+
+        .option-btn:active:not(:disabled) {
+            transform: translateY(4px);
+            box-shadow: 0 1px 0 #CBD5E1;
+        }
+
+        .option-btn.correct {
+            background-color: #E8FDF0 !important;
+            border-color: var(--success-color) !important;
+            color: #0E6237 !important;
+            box-shadow: 0 5px 0 var(--success-color) !important;
+        }
+
+        .option-btn.wrong {
+            background-color: #FFEBEB !important;
+            border-color: var(--danger-color) !important;
+            color: #991B1B !important;
+            box-shadow: 0 5px 0 var(--danger-color) !important;
+        }
+
+        .explanation-box {
+            margin-top: 20px;
+            background: #F8F9FA;
+            border-left: 6px solid var(--primary-color);
+            border-radius: 8px;
+            padding: 18px;
+            display: none;
+            animation: slideDown 0.3s ease-out forwards;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .explanation-title {
+            font-weight: 900;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-size: 1.05rem;
+        }
+
+        .exp-section {
+            margin-bottom: 8px;
+            font-size: 0.98rem;
+            line-height: 1.6;
+        }
+
+        .shake {
+            animation: shakeAnim 0.4s ease-in-out;
+        }
+
+        @keyframes shakeAnim {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-6px); }
+            40%, 80% { transform: translateX(6px); }
+        }
+
+        .submit-container {
+            text-align: center;
+            margin: 40px 0 70px 0;
+        }
+
+        .btn-submit {
+            background: #FF7675;
+            color: white;
+            border: none;
+            padding: 16px 50px;
+            font-size: 1.35rem;
+            font-weight: 900;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 7px 0 #E84393;
+            transition: all 0.1s;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 9px 0 #E84393;
+        }
+
+        .btn-submit:active {
+            transform: translateY(5px);
+            box-shadow: 0 2px 0 #E84393;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: #FFF;
+            border-radius: 24px;
+            padding: 35px 25px;
+            max-width: 550px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+            border: 4px solid var(--accent-color);
+            animation: scaleUp 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        @keyframes scaleUp {
+            from { transform: scale(0.85); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-title {
+            font-size: 1.7rem;
+            font-weight: 900;
+            color: var(--primary-color);
+            margin-bottom: 12px;
+        }
+
+        .modal-score {
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: var(--success-color);
+            margin: 10px 0;
+        }
+
+        .modal-comment {
+            font-size: 1.1rem;
+            font-weight: 700;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            color: #444;
+        }
+
+        .btn-close-modal {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 35px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 15px;
+            cursor: pointer;
+            box-shadow: 0 5px 0 #6C5CE7;
+        }
+
+        #confetti-canvas {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 99;
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="confetti-canvas"></canvas>
+
+    <div class="container">
+        <header>
+            <h5>Giáo viên tạo: Ms Lê Hằng English</h5>
+        </header>
+
+        <div class="alert-box">
+            <span class="alert-title">⚠️ LỜI NHẮC CỰC KỲ QUAN TRỌNG ⚠️</span>
+            Chỉ có đọc kỹ giải thích ngay sau mỗi câu, sau đó ghi lại từ vựng/cấu trúc mới vào vở để học thì mới thực sự giỏi lên.<br>
+            Làm cho xong mà không đọc giải thích hay đọc qua loa không ghi chép thì chỉ tốn thời gian vô ích!<br>
+            <span style="color: var(--primary-color); display:block; margin-top:5px; font-weight:900;">* Kéo tới đâu, làm tới đó! *</span>
+        </div>
+
+        <div id="quiz-wrapper"></div>
+
+        <div class="submit-container">
+            <button class="btn-submit" onclick="submitQuiz()">Nộp Bài Báo Điểm 🏆</button>
+        </div>
+    </div>
+
+    <div id="scoreModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-title">Kết Quả Thử Thách 🌟</div>
+            <div class="modal-score" id="modalScoreText">0/0</div>
+            <div class="modal-comment" id="modalCommentText">Đang chấm điểm...</div>
+            <button class="btn-close-modal" onclick="closeModal()">Làm lại bài thi 🔄</button>
+        </div>
+    </div>
+
+    <script>
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        let audioCtx = null;
+        function initAudio() { if (!audioCtx) audioCtx = new AudioCtx(); }
+        function playSound(type) {
+            try {
+                initAudio(); if (!audioCtx) return;
+                const now = audioCtx.currentTime;
+                if (type === 'correct') {
+                    const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain();
+                    osc.type = 'sine'; osc.frequency.setValueAtTime(523.25, now); osc.frequency.setValueAtTime(659.25, now + 0.08);
+                    gain.gain.setValueAtTime(0.25, now); gain.gain.exponentialRampToValueAtTime(0.01, now + 0.35);
+                    osc.connect(gain); gain.connect(audioCtx.destination); osc.start(now); osc.stop(now + 0.35);
+                } else {
+                    const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain();
+                    osc.type = 'triangle'; osc.frequency.setValueAtTime(150, now); osc.frequency.linearRampToValueAtTime(80, now + 0.3);
+                    gain.gain.setValueAtTime(0.25, now); gain.gain.exponentialRampToValueAtTime(0.01, now + 0.35);
+                    osc.connect(gain); gain.connect(audioCtx.destination); osc.start(now); osc.stop(now + 0.35);
+                }
+            } catch (e) {}
+        }
+
+        const canvas = document.getElementById('confetti-canvas'); const ctx = canvas.getContext('2d');
+        let confettiPieces = []; let animationFrameId = null;
+        function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+        window.addEventListener('resize', resizeCanvas); resizeCanvas();
+        function createConfetti() {
+            confettiPieces = [];
+            for (let i = 0; i < 70; i++) {
+                confettiPieces.push({
+                    x: Math.random() * canvas.width, y: Math.random() * canvas.height - canvas.height,
+                    r: Math.random() * 5 + 4, d: Math.random() * canvas.height,
+                    color: `hsl(${Math.random() * 360}, 100%, 65%)`, tilt: Math.random() * 10 - 5,
+                    tiltAngleIncremental: Math.random() * 0.06 + 0.02, tiltAngle: 0
+                });
+            }
+            if(animationFrameId) cancelAnimationFrame(animationFrameId); animateConfetti();
+        }
+        function animateConfetti() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height); let active = false;
+            confettiPieces.forEach((p) => {
+                p.tiltAngle += p.tiltAngleIncremental; p.y += (Math.cos(p.d) + 3 + p.r / 2) / 2; p.x += Math.sin(p.tiltAngle); p.tilt = Math.sin(p.tiltAngle - p.r / 2) * 4;
+                if (p.y <= canvas.height) active = true;
+                ctx.beginPath(); ctx.lineWidth = p.r; ctx.strokeStyle = p.color;
+                ctx.moveTo(p.x + p.tilt + p.r / 2, p.y); ctx.lineTo(p.x + p.tilt, p.y + p.tilt + p.r / 2); ctx.stroke();
+            });
+            if (active) animationFrameId = requestAnimationFrame(animateConfetti);
+            else ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        const rawQuizData = [
+            {
+                "question": "The local authorities are working hard to ________ the historical sites to attract more international tourists next year.",
+                "options": ["modern", "modernize", "modernization", "modernly"],
+                "correctIndex": 1,
+                "explanation": "<div class='exp-section'><strong>Bước 1 - Dịch nghĩa câu hỏi:</strong> Các cơ quan chức năng địa phương đang nỗ lực làm việc để hiện đại hóa các di tích lịch sử nhằm thu hút nhiều khách du lịch quốc tế hơn vào năm tới.</div><div class='exp-section'><strong>Bước 2 - Phân tích ngữ pháp các đáp án:</strong><br>A. modern (adj): hiện đại<br>B. modernize (v): hiện đại hóa<br>C. modernization (n): sự hiện đại hóa<br>D. modernly (adv): một cách hiện đại</div><div class='exp-section'><strong>Bước 3 - Giải thích đáp án đúng:</strong> Chọn B. Ta thấy trước chỗ trống có cấu trúc <b>to + V(bare-inf)</b> chỉ mục đích (để làm gì). Do đó vị trí này cần điền một động từ nguyên mẫu. Đuôi '-ize' là đuôi động từ đặc trưng.</div><div class='exp-section'><strong>Bước 4 - Giải thích tại sao các đáp án khác sai:</strong> A sai vì là tính từ. C sai vì là danh từ. D sai vì là trạng từ.</div>"
+            },
+            {
+                "question": "Many parents expressed their ________ with the school’s decision to increase the tuition fees without any prior notice.",
+                "options": ["satisfy", "satisfaction", "dissatisfaction", "dissatisfactory"],
+                "correctIndex": 2,
+                "explanation": "<div class='exp-section'><strong>Bước 1 - Dịch nghĩa câu hỏi:</strong> Nhiều phụ huynh đã bày tỏ sự không hài lòng của họ đối với quyết định tăng học phí của nhà trường mà không có bất kỳ thông báo trước nào.</div><div class='exp-section'><strong>Bước 2 - Phân tích ngữ pháp các đáp án:</strong><br>A. satisfy (v): làm hài lòng<br>B. satisfaction (n): sự hài lòng<br>C. dissatisfaction (n): sự không hài lòng<br>D. dissatisfactory (adj): không thỏa đáng</div><div class='exp-section'><strong>Bước 3 - Giải thích đáp án đúng:</strong> Chọn C. Sau tính từ sở hữu 'their' cần một danh từ (loại A, D). Xét ngữ cảnh nhà trường tăng học phí đột ngột không thông báo trước, phản ứng của phụ huynh phải là tiêu cực, tức là bày tỏ 'sự không hài lòng' (dissatisfaction).</div><div class='exp-section'><strong>Bước 4 - Giải thích tại sao các đáp án khác sai:</strong> B sai về nghĩa ngữ cảnh (phụ huynh không thể hài lòng khi bị tăng học phí đột ngột).</div>"
+            },
+            {
+                "question": "The laboratory is equipped with ______ microscopes that allow scientists to observe the smallest cellular structures.",
+                "options": ["electronic powerful new Swiss", "Swiss electronic powerful new", "new Swiss powerful electronic", "powerful new Swiss electronic"],
+                "correctIndex": 3,
+                "explanation": "<div class='exp-section'><strong>Bước 1 - Dịch nghĩa câu hỏi:</strong> Phòng thí nghiệm được trang bị những kính hiển vi Thụy Sĩ mới, mạnh mẽ, chạy bằng điện tử cho phép các nhà khoa học quan sát các cấu trúc tế bào nhỏ nhất.</div><div class='exp-section'><strong>Bước 2 - Phân tích quy tắc trật tự tính từ OpSACOMP:</strong><br>- powerful: chỉ quan điểm, chất lượng (Opinion)<br>- new: chỉ độ tuổi (Age)<br>- Swiss: chỉ nguồn gốc xuất xứ (Origin)<br>- electronic: chỉ loại hình/mục đích công nghệ (Type/Purpose)</div><div class='exp-section'><strong>Bước 3 - Giải thích đáp án đúng:</strong> Chọn D. Sắp xếp theo đúng trật tự OpSACOMP: Opinion (powerful) $\rightarrow$ Age (new) $\rightarrow$ Origin (Swiss) $\rightarrow$ Type/Purpose (electronic). Chuỗi từ hoàn chỉnh là 'powerful new Swiss electronic'.</div><div class='exp-section'><strong>Bước 4 - Giải thích tại sao các đáp án khác sai:</strong> A, B, C đều sắp xếp sai vị trí các tính từ, vi phạm quy tắc OpSACOMP.</div>"
+            },
+            {
+                "question": "It is ________ recommended that you back up all your important files before installing the new operating system.",
+                "options": ["high", "highly", "height", "heighten"],
+                "correctIndex": 1,
+                "explanation": "<div class='exp-section'><strong>Bước 1 - Dịch nghĩa câu hỏi:</strong> Bạn rất được khuyến khích sao lưu tất cả các tệp quan trọng trước khi cài đặt hệ điều hành mới.</div><div class='exp-section'><strong>Bước 2 - Phân tích ngữ pháp các đáp án:</strong><br>A. high (adj/adv): cao<br>B. highly (adv): cực kỳ, rất nhiều<br>C. height (n): chiều cao<br>D. heighten (v): làm tăng thêm</div><div class='exp-section'><strong>Bước 3 - Giải thích đáp án đúng:</strong> Chọn B. Ta cần một trạng từ chỉ mức độ để bổ nghĩa cho động từ/phân từ 'recommended'. Cụm từ cố định <b>highly recommend</b> có nghĩa là cực kỳ khuyến khích, đánh giá cao.</div><div class='exp-section'><strong>Bước 4 - Giải thích tại sao các đáp án khác sai:</strong> A, C, D không có chức năng ngữ pháp bổ nghĩa cho phân từ ở vị trí này.</div>"
+            },
+            {
+                "question": "The scientist’s discovery was so ________ that it opened up a completely new field of study in molecular biology.",
+                "options": ["revolution", " revolutionize", "revolutionary", "revolutionarily"],
+                "correctIndex": 2,
+                "explanation": "<div class='exp-section'><strong>Bước 1 - Dịch nghĩa câu hỏi:</strong> Phát hiện của nhà khoa học mang tính cách mạng đến mức nó đã mở ra một lĩnh vực nghiên cứu hoàn toàn mới trong sinh học phân tử.</div><div class='exp-section'><strong>Bước 2 - Phân tích ngữ pháp các đáp án:</strong><br>A. revolution (n): cuộc cách mạng<br>B. revolutionize (v): cách mạng hóa<br>C. revolutionary (adj): mang tính cách mạng<br>D. revolutionarily (adv): một cách cách mạng</div><div class='exp-section'><strong>Bước 3 - Giải thích đáp án đúng:</strong> Chọn C. Sau cấu trúc <b>S + be + so + adj + that...</b>, vị trí trống đứng sau trạng từ mức độ 'so' và động từ 'was' nên phải điền một tính từ. Đuôi '-ary' biểu thị tính từ.</div><div class='exp-section'><strong>Bước 4 - Giải thích tại sao các đáp án khác sai:</strong> A là danh từ. B là động từ. D là trạng từ.</div>"
+            },
+            {
+                "question": "He gave his wife a ______ scarf for their anniversary, which she wore to the theater that evening.",
+                "options": ["red beautiful long Italian", "Italian red beautiful long", "beautiful long red Italian", "long Italian red beautiful"],
+                "correctIndex": 2,
+                "explanation": "<div class='exp-section'><strong>Bước 1 - Dịch nghĩa câu hỏi:</strong> Anh ấy đã tặng vợ một chiếc khăn quàng cổ Ý màu đỏ, dài và đẹp nhân ngày kỷ niệm của họ, chiếc khăn mà cô ấy đã đeo đến nhà hát tối hôm đó.</div><div class='exp-section'><strong>Bước 2 - Phân tích quy tắc OpSACOMP:</strong><br>- beautiful: quan điểm (Opinion)<br>- long: kích cỡ (Size)<br>- red: màu sắc (Color)<br>- Italian: nguồn gốc (Origin)</div><div class='exp-section'><strong>Bước 3 - Giải thích đáp án đúng:</strong> Chọn C. Sắp xếp chuẩn: Opinion (beautiful) $\rightarrow$ Size (long) $\rightarrow$ Color (red) $\rightarrow$ Origin (Italian). Chuỗi đúng là 'beautiful long red Italian'.</div><div class='exp-section'><strong>Bước 4 - Giải thích tại sao các đáp án khác sai:</strong> A, B, D sai thứ tự ưu tiên của các nhóm tính từ.</div>"
+            },
+            {
+                "question": "Due to the ________ of the situation, the manager decided to hold an emergency meeting on Sunday morning.",
+                "options": ["urgency", "urgent", "urgently", "urgence"],
+                "correctIndex": 0,
+                "explanation": "<div class='exp-section'><strong>Bước 1 - Dịch nghĩa câu hỏi:</strong> Do tính chất khẩn cấp của tình huống, người quản lý quyết định tổ chức một cuộc họp khẩn cấp vào sáng Chủ nhật.</div><div class='exp-section'><strong>Bước 2 - Phân tích ngữ pháp các đáp án:</strong><br>A. urgency (n): sự khẩn cấp, tính khẩn cấp<br>B. urgent (adj): khẩn cấp<br>C. urgently (adv): một cách khẩn cấp<br>D. urgence: từ không tồn tại chính thức trong tiếng Anh hiện đại</div><div class='exp-section'><strong>Bước 3 - Giải thích đáp án đúng:</strong> Chọn A. Đứng sau mạo từ 'the' và trước giới từ 'of' bắt buộc phải là một danh từ. Danh từ đuôi '-cy' là 'urgency'.</div><div class='exp-section'><strong>Bước 4 - Giải thích tại sao các đáp án khác sai:</strong> B là tính từ, C là trạng từ, D viết sai chính tả.</div>"
+            },
+            {
+                "question": "She gave a ________ performance at the international piano competition, earning a standing ovation from the entire audience.",
+                "options": ["marvel", "marvelous", "marvelously", "marveling"],
+                "correctIndex": 1,
+                "explanation": "<div class='exp-section'><strong>Bước 1 - Dịch nghĩa câu hỏi:</strong> Cô ấy đã có một màn trình diễn tuyệt vời tại cuộc thi piano quốc tế, nhận được sự hoan nghênh nhiệt liệt từ toàn bộ khán giả.</div><div class='exp-section'><strong>Bước 2 - Phân tích ngữ pháp các đáp án:</strong><br>A. marvel (n/v): điều kỳ diệu / kỳ công<br>B. marvelous (adj): tuyệt vời, kỳ diệu<br>C. marvelously (adv): một cách tuyệt vời<br>D. marveling (v-ing): kinh ngạc</div><div class='exp-section'><strong>Bước 3 - Giải thích đáp án đúng:</strong> Chọn B. Đứng trước danh từ 'performance' cần một tính từ bổ nghĩa cho danh từ đó. Tính từ có đuôi '-ous' là 'marvelous'.</div><div class='exp-section'><strong>Bước 4 - Giải thích tại sao các đáp án khác sai:</strong> A là danh từ/động từ. C là trạng từ. D là phân từ.</div>"
+            },
+            {
+                "question": "The library contains many ______ manuscripts that are extremely fragile and require special handling by the librarians.",
+                "options": ["valuable ancient handwritten paper", "handwritten paper valuable ancient", "paper ancient valuable handwritten", "ancient valuable paper handwritten"],
+                "correctIndex": 0,
+                "explanation": "<div class='exp-section'><strong>Bước 1 - Dịch nghĩa câu hỏi:</strong> Thư viện chứa nhiều bản thảo bằng giấy, viết tay, cổ kính và có giá trị, chúng cực kỳ dễ vỡ và cần thủ thư xử lý đặc biệt.</div><div class='exp-section'><strong>Bước 2 - Phân tích quy tắc OpSACOMP:</strong><br>- valuable: giá trị/quan điểm (Opinion)<br>- ancient: cổ xưa/tuổi tác (Age)<br>- handwritten: viết tay (hình thái/đặc tính vật lý)<br>- paper: bằng giấy/chất liệu (Material)</div><div class='exp-section'><strong>Bước 3 - Giải thích đáp án đúng:</strong> Chọn A. Thứ tự sắp xếp chính xác: Opinion (valuable) $\rightarrow$ Age (ancient) $\rightarrow$ Physical Quality (handwritten) $\rightarrow$ Material (paper). Do đó 'valuable ancient handwritten paper' là đáp án đúng.</div><div class='exp-section'><strong>Bước 4 - Giải thích tại sao các đáp án khác sai:</strong> B, C, D xếp sai vị trí vật liệu (paper) hoặc tuổi tác, quan điểm.</div>"
+            },
+            {
+                "question": "The ________ of the new tax system has caused a lot of confusion among small business owners this month.",
+                "options": ["complex", "complicatedly", "complicate", "complexity"],
+                "correctIndex": 3,
+                "explanation": "<div class='exp-section'><strong>Bước 1 - Dịch nghĩa câu hỏi:</strong> Sự phức tạp của hệ thống thuế mới đã gây ra nhiều sự bối rối cho các chủ doanh nghiệp nhỏ trong tháng này.</div><div class='exp-section'><strong>Bước 2 - Phân tích ngữ pháp các đáp án:</strong><br>A. complex (adj): phức tạp<br>B. complicatedly (adv): một cách phức tạp<br>C. complicate (v): làm cho phức tạp<br>D. complexity (n): sự phức tạp</div><div class='exp-section'><strong>Bước 3 - Giải thích đáp án đúng:</strong> Chọn D. Đứng đầu câu sau mạo từ 'the' và làm chủ ngữ trước cụm giới từ 'of...' cần một danh từ. Đuôi '-ity' cấu tạo nên danh từ trừu tượng 'complexity'.</div><div class='exp-section'><strong>Bước 4 - Giải thích tại sao các đáp án khác sai:</strong> A là tính từ. B là trạng từ. C là động từ.</div>"
+            },
+            {
+                "question": "The garden was filled with ______ roses that filled the air with a sweet and intoxicating fragrance.",
+                "options": ["white lovely English miniature", "miniature white English lovely", "lovely miniature white English", "English lovely white miniature"],
+                "correctIndex": 2,
+                "explanation": "<div class='exp-section'><strong>Bước 1 - Dịch nghĩa câu hỏi:</strong> Khu vườn ngập tràn những bông hoa hồng thu nhỏ nước Anh màu trắng đáng yêu làm bầu không khí ngập tràn hương thơm ngọt ngào say đắm.</div><div class='exp-section'><strong>Bước 2 - Phân tích quy tắc OpSACOMP:</strong><br>- lovely: đáng yêu (Opinion)<br>- miniature: thu nhỏ/kích cỡ (Size)<br>- white: màu sắc (Color)<br>- English: nguồn gốc (Origin)</div><div class='exp-section'><strong>Bước 3 - Giải thích đáp án đúng:</strong> Chọn C. Sắp xếp chuẩn: Opinion (lovely) $\rightarrow$ Size (miniature) $\rightarrow$ Color (white) $\rightarrow$ Origin (English). Do đó chọn 'lovely miniature white English'.</div><div class='exp-section'><strong>Bước 4 - Giải thích tại sao các đáp án khác sai:</strong> A, B, D đặt sai vị trí của màu sắc hoặc nguồn gốc, kích thước.</div>"
+            },
+            {
+                "question": "The company decided to ________ its workforce by twenty percent to cut costs and survive the economic crisis.",
+                "options": ["reduce", "reduction", "reducible", "reductive"],
+                "correctIndex": 0,
+                "explanation": "<div class='exp-section'><strong>Bước 1 - Dịch nghĩa câu hỏi:</strong> Công ty đã quyết định giảm lực lượng lao động bớt 20% để cắt giảm chi phí và sống sót qua cuộc khủng hoảng kinh tế.</div><div class='exp-section'><strong>Bước 2 - Phân tích ngữ pháp các đáp án:</strong><br>A. reduce (v): giảm bớt<br>B. reduction (n): sự giảm bớt<br>C. reducible (adj): có thể giảm bớt<br>D. reductive (adj): mang tính khử / giảm thiểu</div><div class='exp-section'><strong>Bước 3 - Giải thích đáp án đúng:</strong> Chọn A. Đứng sau cấu trúc động từ nguyên mẫu <b>decide + to + V(bare)</b>, ta cần một động từ nguyên mẫu làm hành động cốt lõi.</div><div class='exp-section'><strong>Bước 4 - Giải thích tại sao các đáp án khác sai:</strong> B là danh từ. C và D là tính từ.</div>"
+            },
+            {
+                "question": "The fashion icon was spotted wearing a ______ belt that perfectly accentuated her waistline during the spring runway show.",
+                "options": ["stylish slim black leather", "leather stylish slim black", "black leather stylish slim", "slim black leather stylish"],
+                "correctIndex": 0,
+                "explanation": "<div class='exp-section'><strong>Bước 1 - Dịch nghĩa câu hỏi:</strong> Biểu tượng thời trang được bắt gặp đeo một chiếc thắt lưng da màu đen mảnh khảnh sành điệu, tôn lên hoàn hảo vòng eo của cô ấy trong buổi trình diễn thời trang mùa xuân.</div><div class='exp-section'><strong>Bước 2 - Phân tích quy tắc OpSACOMP:</strong><br>- stylish: sành điệu (Opinion)<br>- slim: mảnh, nhỏ (Size)<br>- black: màu sắc (Color)<br>- leather: chất liệu da (Material)</div><div class='exp-section'><strong>Bước 3 - Giải thích đáp án đúng:</strong> Chọn A. Theo đúng trật tự: Opinion (stylish) $\rightarrow$ Size (slim) $\rightarrow$ Color (black) $\rightarrow$ Material (leather). Đáp án là 'stylish slim black leather'.</div><div class='exp-section'><strong>Bước 4 - Giải thích tại sao các đáp án khác sai:</strong> B, C, D sắp xếp chất liệu da (leather) hoặc màu sắc lên trước quan điểm/kích thước, sai quy tắc.</div>"
+            },
+            {
+                "question": "The weather forecast says that there will be ________ rain in the northern part of the country tomorrow morning.",
+                "options": ["heavy", "heavily", "heaviness", "heighten"],
+                "correctIndex": 0,
+                "explanation": "<div class='exp-section'><strong>Bước 1 - Dịch nghĩa câu hỏi:</strong> Dự báo thời tiết nói rằng sẽ có mưa lớn ở khu vực phía bắc đất nước vào sáng mai.</div><div class='exp-section'><strong>Bước 2 - Phân tích ngữ pháp các đáp án:</strong><br>A. heavy (adj): nặng, lớn (mưa)<br>B. heavily (adv): một cách nặng nề<br>C. heaviness (n): sự nặng nề<br>D. heighten (v): làm tăng lên</div><div class='exp-section'><strong>Bước 3 - Giải thích đáp án đúng:</strong> Chọn A. Đứng ngay trước danh từ 'rain' (mưa) cần có một tính từ đóng vai trò thuộc ngữ bổ nghĩa cho danh từ đó. Cụm từ thông dụng là 'heavy rain' (mưa to/mưa lớn).</div><div class='exp-section'><strong>Bước 4 - Giải thích tại sao các đáp án khác sai:</strong> B là trạng từ. C là danh từ. D là động từ.</div>"
+            },
+            {
+                "question": "In the corner of the master bedroom stood an ______ mirror that had been gifted by a wealthy relative.",
+                "options": ["antique expensive oval gold", "expensive antique oval gold", "gold expensive antique oval", "expensive oval antique gold"],
+                "correctIndex": 1,
+                "explanation": "<div class='exp-section'><strong>Bước 1 - Dịch nghĩa câu hỏi:</strong> Ở góc phòng ngủ chính có một chiếc gương vàng hình bầu dục, đắt tiền và cổ kính được tặng bởi một người họ hàng giàu có.</div><div class='exp-section'><strong>Bước 2 - Phân tích quy tắc OpSACOMP:</strong><br>- expensive: đắt tiền (Opinion)<br>- antique: cổ kính/tuổi tác (Age)<br>- oval: hình bầu dục/hình dáng (Shape)<br>- gold: bằng vàng/chất liệu hoặc màu sắc (Material/Color)</div><div class='exp-section'><strong>Bước 3 - Giải thích đáp án đúng:</strong> Chọn B. Sắp xếp đúng trình tự: Opinion (expensive) $\rightarrow$ Age (antique) $\rightarrow$ Shape (oval) $\rightarrow$ Material (gold). Tạo ra cụm 'expensive antique oval gold'.</div><div class='exp-section'><strong>Bước 4 - Giải thích tại sao các đáp án khác sai:</strong> A, C, D hoán đổi sai vị trí của tính từ chỉ tuổi tác, hình dáng và chất liệu.</div>"
+            },
+            {
+                "question": "The ________ of the new product was delayed because of some minor technical issues found during the last test.",
+                "options": ["produce", "production", "productive", "productively"],
+                "correctIndex": 1,
+                "explanation": "<div class='exp-section'><strong>Bước 1 - Dịch nghĩa câu hỏi:</strong> Việc sản xuất sản phẩm mới đã bị trì hoãn vì một số lỗi kỹ thuật nhỏ được tìm thấy trong lần kiểm tra cuối cùng.</div><div class='exp-section'><strong>Bước 2 - Phân tích ngữ pháp các đáp án:</strong><br>A. produce (v/n): sản xuất / nông sản<br>B. production (n): sự sản xuất, quá trình sản xuất<br>C. productive (adj): năng suất<br>D. productively (adv): một cách năng suất</div><div class='exp-section'><strong>Bước 3 - Giải thích đáp án đúng:</strong> Chọn B. Chỗ trống đứng đầu câu sau mạo từ 'the' và trước giới từ 'of' đóng vai trò chủ ngữ chính, nên vị trí này bắt buộc phải là một danh từ. 'production' có đuôi '-tion' danh từ.</div><div class='exp-section'><strong>Bước 4 - Giải thích tại sao các đáp án khác sai:</strong> A đóng vai trò động từ là chính (hoặc danh từ mang nghĩa nông sản không phù hợp ngữ cảnh thiết bị/sản phẩm công nghiệp). C là tính từ, D là trạng từ.</div>"
+            },
+            {
+                "question": "He is a very ________ person who always thinks carefully before making any important decisions in his life.",
+                "options": ["thought", "thoughtful", "thoughtfully", "thoughtfulness"],
+                "correctIndex": 1,
+                "explanation": "<div class='exp-section'><strong>Bước 1 - Dịch nghĩa câu hỏi:</strong> Anh ấy là một người rất chu đáo/chín chắn, người luôn suy nghĩ cẩn thận trước khi đưa ra bất kỳ quyết định quan trọng nào trong cuộc đời.</div><div class='exp-section'><strong>Bước 2 - Phân tích ngữ pháp các đáp án:</strong><br>A. thought (n/v): ý nghĩ / quá khứ của think<br>B. thoughtful (adj): chín chắn, chu đáo, trầm ngâm<br>C. thoughtfully (adv): một cách chu đáo<br>D. thoughtfulness (n): sự chín chắn, chu đáo</div><div class='exp-section'><strong>Bước 3 - Giải thích đáp án đúng:</strong> Chọn B. Chỗ trống nằm trong cấu trúc <b>a + very + adv + N</b>. Trạng từ 'very' bổ nghĩa cho tính từ đứng sau nó, tính từ này đứng trước bổ nghĩa trực tiếp cho danh từ 'person'. Đuôi '-ful' tạo nên tính từ.</div><div class='exp-section'><strong>Bước 4 - Giải thích tại sao các đáp án khác sai:</strong> A là danh từ. C là trạng từ. D là danh từ.</div>"
+            },
+            {
+                "question": "The children were ________ playing in the garden while their parents were preparing lunch in the kitchen.",
+                "options": ["happy", "happiness", "happily", "happier"],
+                "correctIndex": 2,
+                "explanation": "<div class='exp-section'><strong>Bước 1 - Dịch nghĩa câu hỏi:</strong> Lũ trẻ đang chơi đùa một cách vui vẻ ngoài vườn trong khi bố mẹ chúng đang chuẩn bị bữa trưa trong bếp.</div><div class='exp-section'><strong>Bước 2 - Phân tích ngữ pháp các đáp án:</strong><br>A. happy (adj): vui vẻ<br>B. happiness (n): sự hạnh phúc, niềm vui<br>C. happily (adv): một cách vui vẻ<br>D. happier (adj-so sánh hơn): vui hơn</div><div class='exp-section'><strong>Bước 3 - Giải thích đáp án đúng:</strong> Chọn C. Ta thấy vị trí trống đứng trước và bổ nghĩa trực tiếp cho động từ hành động ở dạng tiếp diễn 'playing'. Trạng từ là từ loại chuyên dùng bổ nghĩa cho động từ thường. Do đó chọn 'happily'.</div><div class='exp-section'><strong>Bước 4 - Giải thích tại sao các đáp án khác sai:</strong> A và D là tính từ (chỉ đứng sau to be/linking verb hoặc trước danh từ). B là danh từ.</div>"
+            },
+            {
+                "question": "You should always pay attention to the ________ of the chemicals you use in the laboratory for safety reasons.",
+                "options": ["pure", "purify", "purity", "purely"],
+                "correctIndex": 2,
+                "explanation": "<div class='exp-section'><strong>Bước 1 - Dịch nghĩa câu hỏi:</strong> Bạn nên luôn luôn chú ý đến độ tinh khiết của các hóa chất bạn sử dụng trong phòng thí nghiệm vì lý do an toàn.</div><div class='exp-section'><strong>Bước 2 - Phân tích ngữ pháp các đáp án:</strong><br>A. pure (adj): tinh khiết<br>B. purify (v): thanh lọc, làm sạch<br>C. purity (n): độ tinh khiết, sự tinh khiết<br>D. purely (adv): hoàn toàn, chỉ là</div><div class='exp-section'><strong>Bước 3 - Giải thích đáp án đúng:</strong> Chọn C. Vị trí nằm sau mạo từ 'the' và đứng trước giới từ 'of' bắt buộc phải là cấu trúc danh từ. Đuôi '-ity' là đuôi danh từ trừu tượng vật lý.</div><div class='exp-section'><strong>Bước 4 - Giải thích tại sao các đáp án khác sai:</strong> A là tính từ. B là động từ. D là trạng từ.</div>"
+            },
+            {
+                "question": "The ________ of information on the internet makes it difficult for people to distinguish between truth and fake news.",
+                "options": ["abundant", "abundance", "abundantly", "abounding"],
+                "correctIndex": 1,
+                "explanation": "<div class='exp-section'><strong>Bước 1 - Dịch nghĩa câu hỏi:</strong> Sự dồi dào/thừa mứa thông tin trên internet khiến mọi người khó phân biệt giữa sự thật và tin giả.</div><div class='exp-section'><strong>Bước 2 - Phân tích ngữ pháp các đáp án:</strong><br>A. abundant (adj): dồi dào, phong phú<br>B. abundance (n): sự dồi dào, lượng phong phú<br>C. abundantly (adv): một cách dồi dào<br>D. abounding (adj): thừa mứa, đầy rẫy</div><div class='exp-section'><strong>Bước 3 - Giải thích đáp án đúng:</strong> Chọn B. Đứng đầu câu sau mạo từ 'the' để làm chủ ngữ cho động từ 'makes' phía sau, ta cần một danh từ. Danh từ có đuôi '-ance' là 'abundance'.</div><div class='exp-section'><strong>Bước 4 - Giải thích tại sao các đáp án khác sai:</strong> A, D là tính từ. C là trạng từ.</div>"
+            },
+            {
+                "question": "The ________ of his speech was praised by the critics, although they disagreed with some of his main points.",
+                "options": ["clarity", "clear", "clarify", "clearly"],
+                "correctIndex": 0,
+                "explanation": "<div class='exp-section'><strong>Bước 1 - Dịch nghĩa câu hỏi:</strong> Sự rõ ràng trong bài phát biểu của ông ấy được các nhà phê bình khen ngợi, mặc dù họ không đồng ý với một số điểm chính của ông.</div><div class='exp-section'><strong>Bước 2 - Phân tích ngữ pháp các đáp án:</strong><br>A. clarity (n): sự rõ ràng, độ minh bạch<br>B. clear (adj): rõ ràng<br>C. clarify (v): làm cho rõ ràng, làm sáng tỏ<br>D. clearly (adv): một cách rõ ràng</div><div class='exp-section'><strong>Bước 3 - Giải thích đáp án đúng:</strong> Chọn A. Đứng sau mạo từ 'the' và đóng vai trò làm chủ ngữ trước cụm giới từ 'of his speech' cần có một danh từ. 'clarity' chính là danh từ của tính từ 'clear'.</div><div class='exp-section'><strong>Bước 4 - Giải thích tại sao các đáp án khác sai:</strong> B là tính từ. C là động từ. D là trạng từ.</div>"
+            },
+            {
+                "question": "The grandmother baked several ______ cookies, filling the entire kitchen with the warm aroma of cocoa and sugar.",
+                "options": ["delicious round small chocolate", "small delicious round chocolate", "delicious small round chocolate", "chocolate delicious small round"],
+                "correctIndex": 2,
+                "explanation": "<div class='exp-section'><strong>Bước 1 - Dịch nghĩa câu hỏi:</strong> Người bà đã nướng vài chiếc bánh quy sô-cô-la tròn nhỏ thơm ngon, làm cả căn bếp ngập tràn mùi hương ấm áp của ca cao và đường.</div><div class='exp-section'><strong>Bước 2 - Phân tích quy tắc OpSACOMP:</strong><br>- delicious: ngon miệng (Opinion)<br>- small: nhỏ/kích cỡ (Size)<br>- round: tròn/hình dáng (Shape)<br>- chocolate: sô-cô-la/bản chất vật liệu cấu thành loại bánh (Material/Noun adjunct)</div><div class='exp-section'><strong>Bước 3 - Giải thích đáp án đúng:</strong> Chọn C. Sắp xếp chuẩn xác theo trật tự: Opinion (delicious) $\rightarrow$ Size (small) $\rightarrow$ Shape (round) $\rightarrow$ Material (chocolate). Tạo ra chuỗi 'delicious small round chocolate'.</div><div class='exp-section'><strong>Bước 4 - Giải thích tại sao các đáp án khác sai:</strong> A, B, D vi phạm trật tự sắp xếp, đẩy hình dáng hoặc loại nguyên liệu lên trước kích thước và ý kiến đánh giá.</div>"
+            },
+            {
+                "question": "The manager was very ________ of the employees’ suggestions and promised to consider them in the next meeting.",
+                "options": ["appreciate", "appreciatively", "appreciation", "appreciative"],
+                "correctIndex": 3,
+                "explanation": "<div class='exp-section'><strong>Bước 1 - Dịch nghĩa câu hỏi:</strong> Người quản lý rất trân trọng những gợi ý của nhân viên và hứa sẽ xem xét chúng trong cuộc họp tiếp theo.</div><div class='exp-section'><strong>Bước 2 - Phân tích ngữ pháp các đáp án:</strong><br>A. appreciate (v): trân trọng, đánh giá cao<br>B. appreciatively (adv): một cách trân trọng<br>C. appreciation (n): sự trân trọng<br>D. appreciative (adj): biết trân trọng, tán thưởng</div><div class='exp-section'><strong>Bước 3 - Giải thích đáp án đúng:</strong> Chọn B (nhầm lẫn: Chọn D). Sau động từ trạng thái 'was' và trạng từ chỉ mức độ 'very' cần điền một tính từ để hoàn thiện cấu trúc vị ngữ. Ta có cấu trúc cố định: <b>be appreciative of sth</b> (trân trọng/biết ơn điều gì). Do đó chọn 'appreciative'.</div><div class='exp-section'><strong>Bước 4 - Giải thích tại sao các đáp án khác sai:</strong> A là động từ. B là trạng từ. C là danh từ.</div>"
+            },
+            {
+                "question": "We need to find a ________ way to dispose of nuclear waste to avoid any long-term damage to the environment.",
+                "options": ["rely", "reliable", "reliability", "reliably"],
+                "correctIndex": 1,
+                "explanation": "<div class='exp-section'><strong>Bước 1 - Dịch nghĩa câu hỏi:</strong> Chúng ta cần tìm một cách đáng tin cậy để xử lý chất thải hạt nhân nhằm tránh bất kỳ thiệt hại lâu dài nào cho môi trường.</div><div class='exp-section'><strong>Bước 2 - Phân tích ngữ pháp các đáp án:</strong><br>A. rely (v): dựa vào, tin cậy<br>B. reliable (adj): đáng tin cậy<br>C. reliability (n): độ tin cậy<br>D. reliably (adv): một cách đáng tin cậy</div><div class='exp-section'><strong>Bước 3 - Giải thích đáp án đúng:</strong> Chọn B. Chỗ trống đứng trước danh từ 'way' (cách thức), giữ chức năng bổ nghĩa cho danh từ này nên bắt buộc phải chọn một tính từ. Đuôi '-able' tạo nên tính từ.</div><div class='exp-section'><strong>Bước 4 - Giải thích tại sao các đáp án khác sai:</strong> A là động từ. C là danh từ. D là trạng từ.</div>"
+            },
+            {
+                "question": "The sudden ________ of the CEO surprised everyone in the company, as no one had expected him to leave so soon.",
+                "options": ["resignation", "resign", "resigned", "resigningly"],
+                "correctIndex": 0,
+                "explanation": "<div class='exp-section'><strong>Bước 1 - Dịch nghĩa câu hỏi:</strong> Việc từ chức đột ngột của Giám đốc điều hành đã làm mọi người trong công ty ngạc nhiên, vì không ai nghĩ ông sẽ rời đi sớm như vậy.</div><div class='exp-section'><strong>Bước 2 - Phân tích ngữ pháp các đáp án:</strong><br>A. resignation (n): sự từ chức<br>B. resign (v): từ chức<br>C. resigned (adj/v-ed): cam chịu / đã từ chức<br>D. resigningly (adv): một cách cam chịu</div><div class='exp-section'><strong>Bước 3 - Giải thích đáp án đúng:</strong> Chọn A. Chỗ trống nằm sau cấu trúc <b>the + tính từ (sudden)</b>, vị trí này đóng vai trò làm chủ ngữ chính đầu câu nên cần điền một danh từ. Đuôi '-ation' là dấu hiệu của danh từ hành động.</div><div class='exp-section'><strong>Bước 4 - Giải thích tại sao các đáp án khác sai:</strong> B là động từ. C là tính từ/động từ chia quá khứ. D là trạng từ.</div>"
+            },
+            {
+                "question": "The ________ of the ancient ruins provides us with valuable information about the daily lives of people in the past.",
+                "options": ["explore", "exploration", "exploratory", "explorer"],
+                "correctIndex": 1,
+                "explanation": "<div class='exp-section'><strong>Bước 1 - Dịch nghĩa câu hỏi:</strong> Việc thám hiểm các tàn tích cổ đại cung cấp cho chúng ta thông tin giá trị về cuộc sống hàng ngày của con người trong quá khứ.</div><div class='exp-section'><strong>Bước 2 - Phân tích ngữ pháp các đáp án:</strong><br>A. explore (v): thám hiểm, khám phá<br>B. exploration (n): sự thám hiểm, cuộc khám phá<br>C. exploratory (adj): mang tính thám hiểm<br>D. explorer (n-chỉ người): nhà thám hiểm</div><div class='exp-section'><strong>Bước 3 - Giải thích đáp án đúng:</strong> Chọn B. Đứng sau mạo từ 'the' và trước giới từ 'of' đóng vai trò chủ ngữ của động từ hành động số ít 'provides' phía sau, ta cần một danh từ chỉ hành động/sự việc (exploration) chứ không phải danh từ chỉ người hành động (explorer) vì người không thể tự mình 'cung cấp thông tin' dưới dạng khái niệm trừu tượng này.</div><div class='exp-section'><strong>Bước 4 - Giải thích tại sao các đáp án khác sai:</strong> A là động từ. C là tính từ. D sai ngữ cảnh nghĩa (nhà thám hiểm của tàn tích - không phù hợp cấu trúc ngữ nghĩa làm chủ ngữ vật thể này).</div>"
+            },
+            {
+                "question": "He struggled to open the ______ gate because the hinges had become rusty over years of neglect.",
+                "options": ["heavy old metal", "heavy metal old", "metal heavy old", "old metal heavy"],
+                "correctIndex": 0,
+                "explanation": "<div class='exp-section'><strong>Bước 1 - Dịch nghĩa câu hỏi:</strong> Anh ấy đã chật vật để mở chiếc cổng sắt cổ kính và nặng nề vì bản lề đã bị gỉ sét qua nhiều năm bỏ bê.</div><div class='exp-section'><strong>Bước 2 - Phân tích quy tắc OpSACOMP:</strong><br>- heavy: nặng/quan điểm vật lý (Opinion/Physical quality)<br>- old: cũ, cổ/tuổi tác (Age)<br>- metal: kim loại/chất liệu (Material)</div><div class='exp-section'><strong>Bước 3 - Giải thích đáp án đúng:</strong> Chọn A. Theo đúng trật tự OpSACOMP: Physical Quality/Opinion (heavy) $\rightarrow$ Age (old) $\rightarrow$ Material (metal). Tổ hợp tạo ra cụm chuẩn xác 'heavy old metal'.</div><div class='exp-section'><strong>Bước 4 - Giải thích tại sao các đáp án khác sai:</strong> B, C, D đều đặt sai vị trí của tính từ chỉ chất liệu (metal) lên trước các đặc tính vật lý và tuổi tác.</div>"
+            },
+            {
+                "question": "Looking up, the sailors saw a ______ cloud, signaling that a violent storm was fast approaching their small vessel.",
+                "options": ["scary massive dark gray", "dark gray scary massive", "massive dark gray scary", "scary dark gray massive"],
+                "correctIndex": 0,
+                "explanation": "<div class='exp-section'><strong>Bước 1 - Dịch nghĩa câu hỏi:</strong> Ngước nhìn lên, các thủy thủ nhìn thấy một đám mây màu xám đen, khổng lồ và đáng sợ, báo hiệu một cơn bão dữ dội đang nhanh chóng tiến đến gần con tàu nhỏ của họ.</div><div class='exp-section'><strong>Bước 2 - Phân tích quy tắc OpSACOMP:</strong><br>- scary: đáng sợ (Opinion)<br>- massive: khổng lồ/kích cỡ (Size)<br>- dark gray: xám đen/màu sắc (Color)</div><div class='exp-section'><strong>Bước 3 - Giải thích đáp án đúng:</strong> Chọn A. Trật tự tính từ chuẩn chỉnh: Opinion (scary) $\rightarrow$ Size (massive) $\rightarrow$ Color (dark gray). Do đó chuỗi từ 'scary massive dark gray' là đáp án đúng duy nhất.</div><div class='exp-section'><strong>Bước 4 - Giải thích tại sao các đáp án khác sai:</strong> B, C, D hoán đổi sai vị trí của tính từ chỉ màu sắc hoặc kích thước lên trước tính từ chỉ ý kiến chủ quan.</div>"
+            },
+            {
+                "question": "You should ________ the meat for at least two hours before cooking it to make it more flavorful and tender.",
+                "options": ["submarine", "marinate", "marinating", "marinated"],
+                "correctIndex": 1,
+                "explanation": "<div class='exp-section'><strong>Bước 1 - Dịch nghĩa câu hỏi:</strong> Bạn nên ướp thịt ít nhất hai tiếng trước khi nấu để thịt đậm đà và mềm hơn. (Lưu ý: từ gốc đề bài ghi 'marinade' viết nhầm, đúng phải là động từ 'marinate')</div><div class='exp-section'><strong>Bước 2 - Phân tích ngữ pháp các đáp án:</strong><br>A. marinade (n): nước sốt ướp thịt<br>B. marinate (v): tẩm ướp (thịt, cá)<br>C. marinating (v-ing): hành động đang tẩm ướp<br>D. marinated (v-ed): đã tẩm ướp</div><div class='exp-section'><strong>Bước 3 - Giải thích đáp án đúng:</strong> Chọn B. Đứng sau động từ khuyết thiếu <b>should + V(bare)</b>, ta bắt buộc phải chọn một động từ nguyên mẫu làm hành động cốt lõi cho câu mệnh lệnh/khuyên bảo. Động từ ở dạng nguyên thể là 'marinate'.</div><div class='exp-section'><strong>Bước 4 - Giải thích tại sao các đáp án khác sai:</strong> A là danh từ. C và D là các dạng thức phân từ biến đổi thì, không đi trực tiếp sau 'should'.</div>"
+            },
+            {
+                "question": "The ________ of the island is famous for its beautiful white sand beaches and crystal clear turquoise water.",
+                "options": ["scenery", "scenic", "scenically", "scene"],
+                "correctIndex": 0,
+                "explanation": "<div class='exp-section'><strong>Bước 1 - Dịch nghĩa câu hỏi:</strong> Phong cảnh của hòn đảo này nổi tiếng với những bãi cát trắng tuyệt đẹp và làn nước màu ngọc bích trong vắt như pha lê.</div><div class='exp-section'><strong>Bước 2 - Phân tích ngữ pháp các đáp án:</strong><br>A. scenery (n): phong cảnh, cảnh quan tự nhiên<br>B. scenic (adj): thuộc về cảnh vật, có cảnh đẹp<br>C. scenically (adv): về mặt phong cảnh<br>D. scene (n): hiện trường, cảnh phim, phân đoạn</div><div class='exp-section'><strong>Bước 3 - Giải thích đáp án đúng:</strong> Chọn A. Đứng đầu câu làm chủ ngữ sau mạo từ 'the' và trước giới từ 'of' cần có một danh từ. Xét ngữ cảnh vẻ đẹp tự nhiên tổng thể của một hòn đảo, ta dùng danh từ không đếm được 'scenery'.</div><div class='exp-section'><strong>Bước 4 - Giải thích tại sao các đáp án khác sai:</strong> B là tính từ. C là trạng từ. D mang nghĩa hiện trường/cảnh phim cụ thể, không dùng để chỉ toàn bộ bức tranh phong cảnh thiên nhiên của đảo.</div>"
+            },
+            {
+                "question": "For the formal interview, he chose to wear an ______ shirt to project an image of professionalism and competence.",
+                "options": ["elegant long-sleeved white cotton", "white cotton elegant long-sleeved", "long-sleeved white cotton elegant", "cotton elegant white long-sleeved"],
+                "correctIndex": 0,
+                "explanation": "<div class='exp-section'><strong>Bước 1 - Dịch nghĩa câu hỏi:</strong> Đối với buổi phỏng vấn trang trọng, anh ấy chọn mặc một chiếc áo sơ mi cotton dài tay màu trắng thanh lịch để thể hiện hình ảnh chuyên nghiệp và năng lực.</div><div class='exp-section'><strong>Bước 2 - Phân tích quy tắc OpSACOMP:</strong><br>- elegant: thanh lịch (Opinion)<br>- long-sleeved: dài tay (Shape/Design)<br>- white: màu sắc (Color)<br>- cotton: vải bông/chất liệu (Material)</div><div class='exp-section'><strong>Bước 3 - Giải thích đáp án đúng:</strong> Chọn A. Theo trật tự chuẩn: Opinion (elegant) $\rightarrow$ Shape/Design (long-sleeved) $\rightarrow$ Color (white) $\rightarrow$ Material (cotton). Tạo nên cụm từ 'elegant long-sleeved white cotton'.</div><div class='exp-section'><strong>Bước 4 - Giải thích tại sao các đáp án khác sai:</strong> B, C, D đều vi phạm trật tự, xếp chất liệu (cotton) hoặc màu sắc lên trước tính từ chỉ quan điểm.</div>"
+            },
+            {
+                "question": "The ________ of the new airport has created many job opportunities for the local residents in the surrounding areas.",
+                "options": ["construct", "constructive", "construction", "constructively"],
+                "correctIndex": 2,
+                "explanation": "<div class='exp-section'><strong>Bước 1 - Dịch nghĩa câu hỏi:</strong> Việc xây dựng sân bay mới đã tạo ra nhiều cơ hội việc làm cho người dân địa phương ở các vùng lân cận.</div><div class='exp-section'><strong>Bước 2 - Phân tích ngữ pháp các đáp án:</strong><br>A. construct (v): xây dựng<br>B. constructive (adj): mang tính xây dựng, tích cực<br>C. construction (n): sự xây dựng, công trình xây dựng<br>D. constructively (adv): một cách mang tính xây dựng</div><div class='exp-section'><strong>Bước 3 - Giải thích đáp án đúng:</strong> Chọn C. Vị trí trống nằm sau mạo từ 'the' và trước giới từ 'of' đóng vai trò chủ ngữ chính cho câu, bắt buộc phải là một danh từ. Đuôi '-tion' tạo nên danh từ chỉ sự việc hành động 'construction'.</div><div class='exp-section'><strong>Bước 4 - Giải thích tại sao các đáp án khác sai:</strong> A là động từ. B là tính từ. D là trạng từ.</div>"
+            },
+            {
+                "question": "She regretted buying that ______ sweater because it made her feel itchy and looked completely out of style.",
+                "options": ["ugly oversized red wool", "red wool ugly oversized", "oversized ugly red wool", "wool red oversized ugly"],
+                "correctIndex": 0,
+                "explanation": "<div class='exp-section'><strong>Bước 1 - Dịch nghĩa câu hỏi:</strong> Cô ấy hối hận vì đã mua chiếc áo len màu đỏ, quá khổ và xấu xí đó vì nó khiến cô ấy cảm thấy ngứa ngáy và trông hoàn toàn lỗi mốt.</div><div class='exp-section'><strong>Bước 2 - Phân tích quy tắc OpSACOMP:</strong><br>- ugly: xấu xí (Opinion)<br>- oversized: quá khổ/kích cỡ (Size)<br>- red: màu sắc (Color)<br>- wool: bằng len/chất liệu (Material)</div><div class='exp-section'><strong>Bước 3 - Giải thích đáp án đúng:</strong> Chọn A. Trật tự sắp xếp chuẩn xác: Opinion (ugly) $\rightarrow$ Size (oversized) $\rightarrow$ Color (red) $\rightarrow$ Material (wool). Chuỗi từ đúng là 'ugly oversized red wool'.</div><div class='exp-section'><strong>Bước 4 - Giải thích tại sao các đáp án khác sai:</strong> B, C, D đều đặt sai thứ tự ưu tiên của nhóm tính từ quan điểm (ugly) hoặc đẩy chất liệu lên trước màu sắc.</div>"
+            },
+            {
+                "question": "The ________ of his family was the most important thing to him, and he worked hard to provide for them.",
+                "options": ["happy", "happiness", "happily", "unhappiness"],
+                "correctIndex": 1,
+                "explanation": "<div class='exp-section'><strong>Bước 1 - Dịch nghĩa câu hỏi:</strong> Hạnh phúc của gia đình là điều quan trọng nhất đối với anh, và anh đã làm việc chăm chỉ để nuôi nấng chăm sóc họ.</div><div class='exp-section'><strong>Bước 2 - Phân tích ngữ pháp các đáp án:</strong><br>A. happy (adj): hạnh phúc<br>B. happiness (n): sự hạnh phúc, niềm hạnh phúc<br>C. happily (adv): một cách hạnh phúc<br>D. unhappiness (n-trái nghĩa): sự bất hạnh, đau khổ</div><div class='exp-section'><strong>Bước 3 - Giải thích đáp án đúng:</strong> Chọn B. Đứng sau mạo từ 'the' và đóng vai trò làm chủ ngữ chính, vị trí này cần một danh từ. Dựa vào ngữ cảnh anh ấy nỗ lực làm việc vì gia đình ('worked hard to provide for them'), đích đến phải là mục đích tích cực - 'sự hạnh phúc' (happiness).</div><div class='exp-section'><strong>Bước 4 - Giải thích tại sao các đáp án khác sai:</strong> A là tính từ. C là trạng từ. D sai ngữ cảnh nghĩa (không ai cày cuốc vất vả vì 'sự bất hạnh' của nhà mình).</div>"
+            },
+            {
+                "question": "We should ________ the use of plastic bags to protect the environment and reduce the amount of waste in landfills.",
+                "options": ["minimal", "minimize", "minimum", "minimally"],
+                "correctIndex": 1,
+                "explanation": "<div class='exp-section'><strong>Bước 1 - Dịch nghĩa câu hỏi:</strong> Chúng ta nên giảm thiểu việc sử dụng túi ni lông để bảo vệ môi trường và giảm lượng rác thải tại các bãi chôn lấp.</div><div class='exp-section'><strong>Bước 2 - Phân tích ngữ pháp các đáp án:</strong><br>A. minimal (adj): tối thiểu, rất ít<br>B. minimize (v): giảm thiểu đến mức tối đa<br>C. minimum (n/adj): mức tối thiểu<br>D. minimally (adv): một cách tối thiểu</div><div class='exp-section'><strong>Bước 3 - Giải thích đáp án đúng:</strong> Chọn B. Vị trí trống nằm sau trợ động từ khuyết thiếu <b>should + V(bare)</b>, nên bắt buộc phải chọn một động từ ở dạng nguyên mẫu không chia. Đuôi '-ize' là đuôi động từ đặc trưng.</div><div class='exp-section'><strong>Bước 4 - Giải thích tại sao các đáp án khác sai:</strong> A, C, D không có hình thái động từ nguyên mẫu hợp ngữ pháp đứng sau 'should'.</div>"
+            },
+            {
+                "question": "We spent our honeymoon in a ______ cottage nestled in the quiet countryside of the Provence region.",
+                "options": ["charming old-fashioned French stone", "French stone charming old-fashioned", "old-fashioned French stone charming", "stone charming French old-fashioned"],
+                "correctIndex": 0,
+                "explanation": "<div class='exp-section'><strong>Bước 1 - Dịch nghĩa câu hỏi:</strong> Chúng tôi đã trải qua tuần trăng mật trong một ngôi nhà tranh bằng đá kiểu Pháp, cổ kính và quyến rũ nép mình trong vùng nông thôn yên bình của vùng Provence.</div><div class='exp-section'><strong>Bước 2 - Phân tích quy tắc OpSACOMP:</strong><br>- charming: quyến rũ (Opinion)<br>- old-fashioned: cổ điển, lỗi thời/tuổi tác (Age)<br>- French: thuộc về nước Pháp/nguồn gốc (Origin)<br>- stone: bằng đá/chất liệu (Material)</div><div class='exp-section'><strong>Bước 3 - Giải thích đáp án đúng:</strong> Chọn A. Trật tự tính từ chuẩn chỉnh: Opinion (charming) $\rightarrow$ Age (old-fashioned) $\rightarrow$ Origin (French) $\rightarrow$ Material (stone). Sắp xếp tạo thành 'charming old-fashioned French stone'.</div><div class='exp-section'><strong>Bước 4 - Giải thích tại sao các đáp án khác sai:</strong> B, C, D đều đặt sai vị trí của chất liệu (stone) hoặc xuất xứ (French) lên trước tính từ chỉ quan điểm đánh giá.</div>"
+            },
+            {
+                "question": "He gave a very ________ explanation for why he was late, but no one in the office really believed him.",
+                "options": ["convincing", "convince", "convincingly", "convinced"],
+                "correctIndex": 0,
+                "explanation": "<div class='exp-section'><strong>Bước 1 - Dịch nghĩa câu hỏi:</strong> Anh ấy đã đưa ra một lời giải thích rất thuyết phục cho lý do tại sao mình đến muộn, nhưng không ai trong văn phòng thực sự tin anh ấy.</div><div class='exp-section'><strong>Bước 2 - Phân tích ngữ pháp các đáp án:</strong><br>A. convincing (adj-chủ động): có tính thuyết phục (dùng cho vật/bản chất sự việc)<br>B. convince (v): thuyết phục<br>C. convincingly (adv): một cách thuyết phục<br>D. convinced (adj-bị động): bị thuyết phục, tin chắc (dùng cho người)</div><div class='exp-section'><strong>Bước 3 - Giải thích đáp án đúng:</strong> Chọn A. Chỗ trống đứng trước danh từ 'explanation' (lời giải thích) để bổ nghĩa cho nó, ta cần một tính từ. Vì lời giải thích tự thân nó tạo ra bản chất thuyết phục người khác nên ta phải dùng tính từ đuôi '-ing' (convincing).</div><div class='exp-section'><strong>Bước 4 - Giải thích tại sao các đáp án khác sai:</strong> B là động từ. C là trạng từ. D là tính từ đuôi '-ed' chỉ dùng cho cảm xúc của con người bị tác động (ví dụ: I am convinced).</div>"
+            },
+            {
+                "question": "The ________ of the disease can be slowed down by taking the prescribed medication regularly and following a healthy diet.",
+                "options": ["progress", "progression", "progressive", "progressively"],
+                "correctIndex": 1,
+                "explanation": "<div class='exp-section'><strong>Bước 1 - Dịch nghĩa câu hỏi:</strong> Sự tiến triển của căn bệnh có thể được làm chậm lại bằng cách uống thuốc theo đơn đều đặn và tuân theo một chế độ ăn uống lành mạnh.</div><div class='exp-section'><strong>Bước 2 - Phân tích ngữ pháp các đáp án:</strong><br>A. progress (n/v): sự tiến bộ (thường mang nghĩa tích cực phát triển có lợi)<br>B. progression (n): sự diễn tiến, sự phát triển dần dần tiến lên (dùng cho quy trình/bệnh lý)<br>C. progressive (adj): mang tính tiến bộ<br>D. progressively (adv): một cách tăng tiến dần dần</div><div class='exp-section'><strong>Bước 3 - Giải thích đáp án đúng:</strong> Chọn B. Đứng sau mạo từ 'the' và làm chủ ngữ trước giới từ 'of' cần một danh từ. Để nói về sự diễn tiến biến đổi cơ học theo giai đoạn của một chứng bệnh, thuật ngữ y khoa học thuật chuẩn xác là danh từ 'progression'.</div><div class='exp-section'><strong>Bước 4 - Giải thích tại sao các đáp án khác sai:</strong> A là danh từ nhưng mang sắc thái 'tiến bộ/đạt thành tựu tốt', không dùng cho bệnh tật phát tác nặng lên. C là tính từ. D là trạng từ.</div>"
+            },
+            {
+                "question": "You should ________ your skills by taking online courses and attending workshops to stay competitive in the job market.",
+                "options": ["rich", "enrich", "enrichment", "richly"],
+                "correctIndex": 1,
+                "explanation": "<div class='exp-section'><strong>Bước 1 - Dịch nghĩa câu hỏi:</strong> Bạn nên làm phong phú/nâng cao kỹ năng của mình bằng cách tham gia các khóa học trực tuyến và tham dự các buổi hội thảo để giữ vững khả năng cạnh tranh trên thị trường việc làm.</div><div class='exp-section'><strong>Bước 2 - Phân tích ngữ pháp các đáp án:</strong><br>A. rich (adj): giàu có, phong phú<br>B. enrich (v): làm giàu, làm phong phú thêm<br>C. enrichment (n): sự làm giàu, sự làm phong phú<br>D. richly (adv): một cách giàu có, phong phú</div><div class='exp-section'><strong>Bước 3 - Giải thích đáp án đúng:</strong> Chọn B. Ta thấy chỗ trống đứng sau động từ khuyết thiếu <b>should + V(bare)</b> và đứng trước cụm tân ngữ 'your skills'. Do đó vị trí này bắt buộc phải điền một ngoại động từ nguyên mẫu. Tiền tố 'en-' tạo nên động từ từ tính từ gốc (rich $\rightarrow$ enrich).</div><div class='exp-section'><strong>Bước 4 - Giải thích tại sao các đáp án khác sai:</strong> A là tính từ. C là danh từ. D là trạng từ.</div>"
+            },
+            {
+                "question": "The interior of the palace was adorned with ______ curtains that shimmered under the light of the crystal chandeliers.",
+                "options": ["beautiful long flowing silk", "silk beautiful long flowing", "flowing silk beautiful long", "long flowing silk beautiful"],
+                "correctIndex": 0,
+                "explanation": "<div class='exp-section'><strong>Bước 1 - Dịch nghĩa câu hỏi:</strong> Nội thất của cung điện được tô điểm bằng những chiếc rèm lụa mềm mại, dài và đẹp mắt, lung linh dưới ánh sáng của những chiếc đèn chùm pha lê.</div><div class='exp-section'><strong>Bước 2 - Phân tích quy tắc OpSACOMP:</strong><br>- beautiful: đẹp mắt (Opinion)<br>- long: dài/kích cỡ (Size)<br>- flowing: thướt tha, rủ xuống (hình thái/đặc tính vật lý hoặc kiểu dáng)<br>- silk: bằng lụa/chất liệu (Material)</div><div class='exp-section'><strong>Bước 3 - Giải thích đáp án đúng:</strong> Chọn A. Thứ tự sắp xếp chuẩn xác logic: Opinion (beautiful) $\rightarrow$ Size (long) $\rightarrow$ Shape/Form (flowing) $\rightarrow$ Material (silk). Chuỗi đúng là 'beautiful long flowing silk'.</div><div class='exp-section'><strong>Bước 4 - Giải thích tại sao các đáp án khác sai:</strong> B, C, D vi phạm quy tắc, xếp chất liệu lụa (silk) lên trước các tính từ miêu tả quan điểm chủ quan hay kích thước.</div>"
+            },
+            {
+                "question": "She spoke ________ about the challenges she faced while living abroad, inspiring many people in the audience to follow their dreams.",
+                "options": ["passion", "passionate", "passionately", "passionless"],
+                "correctIndex": 2,
+                "explanation": "<div class='exp-section'><strong>Bước 1 - Dịch nghĩa câu hỏi:</strong> Cô ấy đã nói một cách đầy nhiệt huyết về những thách thức cô phải đối mặt khi sống ở nước ngoài, truyền cảm hứng cho nhiều người trong khán giả theo đuổi ước mơ của họ.</div><div class='exp-section'><strong>Bước 2 - Phân tích ngữ pháp các đáp án:</strong><br>A. passion (n): niềm đam mê, nhiệt huyết<br>B. passionate (adj): đầy nhiệt huyết, đam mê<br>C. passionately (adv): một cách đầy nhiệt huyết, say sưa<br>D. passionless (adj): không có đam mê, nguội lạnh</div><div class='exp-section'><strong>Bước 3 - Giải thích đáp án đúng:</strong> Chọn C. Chỗ trống đứng sau và bổ nghĩa cho động từ hành động diễn tả lời nói 'spoke' (quá khứ của speak). Do đó, ta cần một trạng từ chỉ cách thức. Trạng từ có đuôi '-ly' phát triển từ tính từ gốc là 'passionately'.</div><div class='exp-section'><strong>Bước 4 - Giải thích tại sao các đáp án khác sai:</strong> A là danh từ. B và D là tính từ.</div>"
+            },
+            {
+                "question": "Even though it was raining, he only had a ______ raincoat that barely kept his expensive suit dry.",
+                "options": ["thin blue plastic cheap", "plastic blue thin cheap", "blue plastic cheap thin", "cheap thin blue plastic"],
+                "correctIndex": 3,
+                "explanation": "<div class='exp-section'><strong>Bước 1 - Dịch nghĩa câu hỏi:</strong> Mặc dù trời đang mưa, anh ấy chỉ có một chiếc áo mưa nhựa màu xanh, mỏng và rẻ tiền, hầu như không giữ khô được bộ vest đắt tiền của mình.</div><div class='exp-section'><strong>Bước 2 - Phân tích quy tắc OpSACOMP:</strong><br>- cheap: rẻ tiền (Opinion)<br>- thin: mỏng/kích cỡ độ dày (Size)<br>- blue: màu xanh/màu sắc (Color)<br>- plastic: bằng nhựa/chất liệu (Material)</div><div class='exp-section'><strong>Bước 3 - Giải thích đáp án đúng:</strong> Chọn B (nhầm lẫn: Chọn D). Sắp xếp chuẩn xác theo thứ tự: Opinion (cheap) $\rightarrow$ Size (thin) $\rightarrow$ Color (blue) $\rightarrow$ Material (plastic). Tổ hợp chuẩn là 'cheap thin blue plastic'.</div><div class='exp-section'><strong>Bước 4 - Giải thích tại sao các đáp án khác sai:</strong> A, B, C đều đặt sai vị trí của chất liệu nhựa (plastic) hoặc màu sắc lên trước tính từ chỉ quan điểm rẻ tiền.</div>"
+            },
+            {
+                "question": "After a long day at work, she loves sinking into a ______ armchair to read her favorite mystery novels.",
+                "options": ["comfortable big round velvet", "velvet comfortable big round", "round velvet comfortable big", "big round velvet comfortable"],
+                "correctIndex": 0,
+                "explanation": "<div class='exp-section'><strong>Bước 1 - Dịch nghĩa câu hỏi:</strong> Sau một ngày dài làm việc, cô ấy thích đắm mình vào một chiếc ghế bành bằng nhung tròn, lớn và thoải mái để đọc những cuốn tiểu thuyết trinh thám yêu thích của mình.</div><div class='exp-section'><strong>Bước 2 - Phân tích quy tắc OpSACOMP:</strong><br>- comfortable: thoải mái (Opinion)<br>- big: lớn/kích cỡ (Size)<br>- round: tròn/hình dáng (Shape)<br>- velvet: bằng nhung/chất liệu (Material)</div><div class='exp-section'><strong>Bước 3 - Giải thích đáp án đúng:</strong> Chọn A. Theo đúng cấu trúc trật tự: Opinion (comfortable) $\rightarrow$ Size (big) $\rightarrow$ Shape (round) $\rightarrow$ Material (velvet). Tạo thành cụm từ hoàn chỉnh 'comfortable big round velvet'.</div><div class='exp-section'><strong>Bước 4 - Giải thích tại sao các đáp án khác sai:</strong> B, C, D đều đặt sai vị trí của chất liệu nhung (velvet) hoặc hình dáng lên trước tính từ chỉ cảm nhận chủ quan.</div>"
+            },
+            {
+                "question": "The ________ of the new software was a huge success, with millions of users downloading it within the first week of release.",
+                "options": ["launch", "launching", "launcher", "launched"],
+                "correctIndex": 0,
+                "explanation": "<div class='exp-section'><strong>Bước 1 - Dịch nghĩa câu hỏi:</strong> Việc ra mắt phần mềm mới là một thành công lớn, với hàng triệu người dùng tải xuống ngay trong tuần đầu tiên phát hành.</div><div class='exp-section'><strong>Bước 2 - Phân tích ngữ pháp các đáp án:</strong><br>A. launch (n/v): sự ra mắt, buổi phát hành / khởi chạy<br>B. launching (v-ing): việc đang khởi chạy<br>C. launcher (n-chỉ vật): bệ phóng, trình khởi chạy phần mềm<br>D. launched (v-ed): đã ra mắt</div><div class='exp-section'><strong>Bước 3 - Giải thích đáp án đúng:</strong> Chọn A. Nằm sau mạo từ 'the' và trước giới từ 'of' đóng vai trò chủ ngữ danh từ hóa, ta cần một danh từ chỉ sự kiện. Bản thân từ 'launch' vừa là động từ vừa là danh từ gốc mang nghĩa 'sự ra mắt/buổi giới thiệu'. Do đó chọn danh từ 'launch' là tối ưu và ngắn gọn nhất theo ngữ cảnh văn phong.</div><div class='exp-section'><strong>Bước 4 - Giải thích tại sao các đáp án khác sai:</strong> B là danh động từ mang tính tiếp diễn hành động. C là danh từ chỉ công cụ phần mềm hiển thị (ví dụ: Nova Launcher). D là động từ chia thì.</div>"
+            },
+            {
+                "question": "We should ________ children to read more books to improve their vocabulary and expand their knowledge about the world.",
+                "options": ["courage", "encourage", "encouragement", "encouragingly"],
+                "correctIndex": 1,
+                "explanation": "<div class='exp-section'><strong>Bước 1 - Dịch nghĩa câu hỏi:</strong> Chúng ta nên khuyến khích trẻ em đọc nhiều sách hơn để cải thiện vốn từ vựng và mở rộng kiến thức về thế giới.</div><div class='exp-section'><strong>Bước 2 - Phân tích ngữ pháp các đáp án:</strong><br>A. courage (n): lòng dũng cảm<br>B. encourage (v): khuyến khích, động viên<br>C. encouragement (n): sự khuyến khích<br>D. encouragingly (adv): một cách đầy khích lệ</div><div class='exp-section'><strong>Bước 3 - Giải thích đáp án đúng:</strong> Chọn B. Đứng sau động từ khuyết thiếu <b>should + V(bare)</b> và đứng trước tân ngữ 'children' làm hành động chính của câu, ta bắt buộc phải chọn một động từ nguyên mẫu. Tiền tố 'en-' kết hợp với danh từ 'courage' tạo nên động từ hành động 'encourage'.</div><div class='exp-section'><strong>Bước 4 - Giải thích tại sao các đáp án khác sai:</strong> A là danh từ. C là danh từ. D là trạng từ.</div>"
+            },
+            {
+                "question": "The ________ of the situation was underestimated by the local authorities, leading to a major crisis in the region.",
+                "options": ["severe", "severity", "severely", "severeness"],
+                "correctIndex": 1,
+                "explanation": "<div class='exp-section'><strong>Bước 1 - Dịch nghĩa câu hỏi:</strong> Mức độ nghiêm trọng của tình huống đã bị chính quyền địa phương đánh giá thấp, dẫn đến một cuộc khủng hoảng lớn trong khu vực.</div><div class='exp-section'><strong>Bước 2 - Phân tích ngữ pháp các đáp án:</strong><br>A. severe (adj): nghiêm trọng, khốc liệt<br>B. severity (n): mức độ nghiêm trọng, tính khốc liệt<br>C. severely (adv): một cách nghiêm trọng<br>D. severeness (n): sự nghiêm trọng (từ ít thông dụng hơn severity rất nhiều)</div><div class='exp-section'><strong>Bước 3 - Giải thích đáp án đúng:</strong> Chọn B. Đứng sau mạo từ 'the' và trước giới từ 'of' làm chủ ngữ chính của câu bị động cần điền một danh từ chuẩn hóa học thuật. Danh từ chính thống của tính từ 'severe' là 'severity' với đuôi '-ity'.</div><div class='exp-section'><strong>Bước 4 - Giải thích tại sao các đáp án khác sai:</strong> A là tính từ. C là trạng từ. D là danh từ phái sinh đuôi '-ness' nhưng không chuẩn hóa và không được dùng trong văn cảnh học thuật bằng 'severity'.</div>"
+            },
+            {
+                "question": "He is a very ________ student who always finishes his assignments on time and participates actively in class discussions.",
+                "options": ["rely", "reliable", "reliability", "reliably"],
+                "correctIndex": 1,
+                "explanation": "<div class='exp-section'><strong>Bước 1 - Dịch nghĩa câu hỏi:</strong> Anh ấy là một học sinh rất đáng tin cậy/chăm chỉ, người luôn hoàn thành bài tập đúng hạn và tham gia tích cực vào các cuộc thảo luận trên lớp.</div><div class='exp-section'><strong>Bước 2 - Phân tích ngữ pháp các đáp án:</strong><br>A. rely (v): tin cậy, dựa vào<br>B. reliable (adj): đáng tin cậy<br>C. reliability (n): độ tin cậy<br>D. reliably (adv): một cách đáng tin cậy</div><div class='exp-section'><strong>Bước 3 - Giải thích đáp án đúng:</strong> Chọn B. Vị trí nằm trong cụm danh từ <b>a + very + adj + N (student)</b>. Tính từ đứng trước bổ nghĩa trực tiếp cho danh từ chỉ người đứng sau. Tính từ có đuôi '-able' là 'reliable'.</div><div class='exp-section'><strong>Bước 4 - Giải thích tại sao các đáp án khác sai:</strong> A là động từ. C là danh từ. D là trạng từ.</div>"
+            },
+            {
+                "question": "We were served appetizers on ______ plates that added a touch of elegance to the outdoor wedding reception.",
+                "options": ["circular porcelain exquisite small", "porcelain exquisite small circular", "small circular porcelain exquisite", "exquisite small circular porcelain"],
+                "correctIndex": 3,
+                "explanation": "<div class='exp-section'><strong>Bước 1 - Dịch nghĩa câu hỏi:</strong> Chúng tôi được phục vụ các món khai vị trên những chiếc đĩa sứ tròn nhỏ tinh xảo làm tăng thêm nét trang trọng cho tiệc cưới ngoài trời.</div><div class='exp-section'><strong>Bước 2 - Phân tích quy tắc OpSACOMP:</strong><br>- exquisite: tinh xảo, tuyệt đẹp (Opinion)<br>- small: nhỏ/kích cỡ (Size)<br>- circular: tròn/hình dáng (Shape)<br>- porcelain: bằng sứ/chất liệu (Material)</div><div class='exp-section'><strong>Bước 3 - Giải thích đáp án đúng:</strong> Chọn B (nhầm lẫn: Chọn D). Sắp xếp chuẩn quy tắc OpSACOMP: Opinion (exquisite) $\rightarrow$ Size (small) $\rightarrow$ Shape (circular) $\rightarrow$ Material (porcelain). Tạo nên chuỗi từ 'exquisite small circular porcelain'.</div><div class='exp-section'><strong>Bước 4 - Giải thích tại sao các đáp án khác sai:</strong> A, B, C sắp xếp chất liệu sứ hoặc hình dáng lên hàng đầu trước tính từ ý kiến chủ quan, hoàn toàn sai quy định.</div>"
+            },
+            {
+                "question": "You should ________ your research findings by providing more evidence and data to support your main arguments.",
+                "options": ["strong", "strength", "strengthen", "strongly"],
+                "correctIndex": 2,
+                "explanation": "<div class='exp-section'><strong>Bước 1 - Dịch nghĩa câu hỏi:</strong> Bạn nên củng cố/làm mạnh thêm các kết quả nghiên cứu của mình bằng cách cung cấp thêm bằng chứng và dữ liệu để hỗ trợ các lập luận chính của mình.</div><div class='exp-section'><strong>Bước 2 - Phân tích ngữ pháp các đáp án:</strong><br>A. strong (adj): mạnh mẽ<br>B. strength (n): sức mạnh, điểm mạnh<br>C. strengthen (v): củng cố, làm cho mạnh lên<br>D. strongly (adv): một cách mạnh mẽ</div><div class='exp-section'><strong>Bước 3 - Giải thích đáp án đúng:</strong> Chọn C. Đứng sau động từ khuyết thiếu <b>should + V(bare)</b> và đứng trước cụm tân ngữ danh từ 'your research findings', vị trí này bắt buộc phải điền một ngoại động từ nguyên mẫu. Đuôi '-en' kết hợp sau danh từ tạo nên động từ hành động (strength $\rightarrow$ strengthen).</div><div class='exp-section'><strong>Bước 4 - Giải thích tại sao các đáp án khác sai:</strong> A là tính từ. B là danh từ. D là trạng từ.</div>"
+            },
+            {
+                "question": "The ________ of the competition was very high, with many talented athletes from all over the world participating this year.",
+                "options": ["compete", "competition", "competitive", "competitively"],
+                "correctIndex": 1,
+                "explanation": "<div class='exp-section'><strong>Bước 1 - Dịch nghĩa câu hỏi:</strong> Mức độ cạnh tranh của cuộc thi rất cao, với nhiều vận động viên tài năng từ khắp nơi trên thế giới tham gia năm nay. (Lưu ý: Ngữ cảnh này 'competition' ám chỉ tính cạnh tranh hoặc giải đấu, dịch thoáng là không khí/mức độ giải đấu).</div><div class='exp-section'><strong>Bước 2 - Phân tích ngữ pháp các đáp án:</strong><br>A. compete (v): cạnh tranh, thi đấu<br>B. competition (n): cuộc thi, sự cạnh tranh<br>C. competitive (adj): mang tính cạnh tranh<br>D. competitively (adv): một cách cạnh tranh</div><div class='exp-section'><strong>Bước 3 - Giải thích đáp án đúng:</strong> Chọn B. Đứng sau mạo từ 'the' đầu câu và đứng trước giới từ 'of' làm cấu trúc ngữ pháp chủ ngữ chính, vị trí này bắt buộc là một danh từ. Đuôi '-tion' biểu thị danh từ 'competition'.</div><div class='exp-section'><strong>Bước 4 - Giải thích tại sao các đáp án khác sai:</strong> A là động từ. C là tính từ. D là trạng từ.</div>"
+            }
+        ];
+
+        let processedQuizData = [];
+
+        function shuffleArray(array) {
+            let cur = array.length;
+            while (cur !== 0) {
+                let rand = Math.floor(Math.random() * cur); cur--;
+                [array[cur], array[rand]] = [array[rand], array[cur]];
+            }
+            return array;
+        }
+
+        function initQuiz() {
+            const wrapper = document.getElementById('quiz-wrapper');
+            wrapper.innerHTML = "";
+
+            processedQuizData = rawQuizData.map((item, idx) => {
+                let indexedOpts = item.options.map((opt, oIdx) => ({ text: opt, originalIdx: oIdx }));
+                shuffleArray(indexedOpts);
+                let newCorrectIdx = indexedOpts.findIndex(o => o.originalIdx === item.correctIndex);
+                return {
+                    id: idx + 1,
+                    question: item.question,
+                    options: indexedOpts.map(o => o.text),
+                    correctIndex: newCorrectIdx,
+                    explanation: item.explanation,
+                    userAnswer: null
+                };
+            });
+
+            processedQuizData.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = "quiz-card";
+                card.id = `card-${index}`;
+
+                const qText = document.createElement('div');
+                qText.className = "question-text";
+                qText.innerHTML = `<strong>Question ${index + 1}:</strong> ${item.question}`;
+                card.appendChild(qText);
+
+                const optContainer = document.createElement('div');
+                optContainer.className = "options-container";
+
+                item.options.forEach((optText, optIdx) => {
+                    const btn = document.createElement('button');
+                    btn.className = "option-btn";
+                    const prefix = String.fromCharCode(65 + optIdx);
+                    btn.innerText = `${prefix}. ${optText}`;
+                    btn.onclick = () => selectOption(index, optIdx, btn);
+                    optContainer.appendChild(btn);
+                });
+                card.appendChild(optContainer);
+
+                const expBox = document.createElement('div');
+                expBox.className = "explanation-box";
+                expBox.id = `exp-${index}`;
+                expBox.innerHTML = `
+                    <div class="explanation-title">🔍 GIẢI THÍCH CHI TIẾT TỪ MS LÊ HẰNG:</div>
+                    ${item.explanation}
+                `;
+                card.appendChild(expBox);
+
+                wrapper.appendChild(card);
+            });
+        }
+
+        function selectOption(qIdx, optIdx, clickedBtn) {
+            const qItem = processedQuizData[qIdx];
+            if (qItem.userAnswer !== null) return;
+
+            qItem.userAnswer = optIdx;
+            const card = document.getElementById(`card-${qIdx}`);
+            const buttons = card.querySelectorAll('.option-btn');
+
+            if (optIdx === qItem.correctIndex) {
+                clickedBtn.classList.add('correct');
+                playSound('correct');
+                createConfetti();
+            } else {
+                clickedBtn.classList.add('wrong');
+                buttons[qItem.correctIndex].classList.add('correct');
+                card.classList.add('shake');
+                playSound('wrong');
+            }
+
+            buttons.forEach(b => b.disabled = true);
+            document.getElementById(`exp-${qIdx}`).style.display = "block";
+        }
+
+        function submitQuiz() {
+            let correctCount = 0;
+            let totalCount = processedQuizData.length;
+            let answeredAll = true;
+
+            processedQuizData.forEach((item) => {
+                if (item.userAnswer === null) answeredAll = false;
+                else if (item.userAnswer === item.correctIndex) correctCount++;
+            });
+
+            if (!answeredAll) {
+                alert("Con ơi, hãy hoàn thành thử thách ở tất cả các câu hỏi trước khi nộp bài nhé! 😊");
+                return;
+            }
+
+            const percentage = (correctCount / totalCount) * 100;
+            let commentText = "";
+
+            if (percentage < 50) {
+                commentText = "Điểm lần này chưa cao lắm, con cố gắng đọc kỹ giải thích đáp án và làm lại nha. Cô tin con sẽ làm tốt hơn ở lần sau!.";
+            } else if (percentage >= 60 && percentage <= 80) {
+                commentText = "Con đã có tiến bộ khá ổn rồi, con cố gắng đọc kỹ giải thích đáp án và làm lại nha. Cô tin con sẽ làm tốt hơn ở lần sau!.";
+            } else if (percentage >= 90) {
+                commentText = "Làm tốt lắm, con cố gắng ring điểm 10 ở lần sau nha!.";
+                createConfetti();
+            }
+
+            document.getElementById('modalScoreText').innerText = `${correctCount} / ${totalCount}`;
+            document.getElementById('modalCommentText').innerText = commentText;
+            document.getElementById('scoreModal').style.display = "flex";
+        }
+
+        function closeModal() {
+            document.getElementById('scoreModal').style.display = "none";
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            initQuiz();
+        }
+
+        window.onload = initQuiz;
+    </script>
+</body>
+</html>
